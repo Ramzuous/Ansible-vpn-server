@@ -46,11 +46,11 @@ Variables to creat OVPN client:
     - <code>vpn_client_res_ret</code> - enable to resolve name of vpn server (example: vpn_client_res_ret: 'infinite')
     - <code>vpn_client_bind</code> - set if client needs to contact to his specyfied port (example: vpn_client_bind: 'nobind')
 
-	  example: 
-	  ```bash
-	  ovpn_clients_vars:
-	  - { ovpn_client_name: '<vpn_client_name>', ovpn_client_pass: '<vpn_client_pass_plain_text>', common_name: '<vpn_client_name_short>', vpn_client_res_ret: '<resolv_retry_type>', vpn_client_bind: '<bind_type>' }
-    ```
+example: 
+```bash
+ovpn_clients_vars:
+  - { ovpn_client_name: '<vpn_client_name>', ovpn_client_pass: '<vpn_client_pass_plain_text>', common_name: '<vpn_client_name_short>', vpn_client_res_ret: '<resolv_retry_type>', vpn_client_bind: '<bind_type>' }
+```
 Variable to revoke VPN user:	  
   * <code>ovpn_client_to_remove_name</code> - set vpn client that you would like to revoke, needs to be set only when you want to disable user's access to vpn server
 	  
