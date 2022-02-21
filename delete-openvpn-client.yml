@@ -1,0 +1,55 @@
+- hosts: vpn-server
+  gather_facts: false
+  vars_files:
+    - vars_files/var_file_strings.yml
+  tasks:
+    - name: Check if /pki/issued/client.crt
+      stat:
+        path: /{{ vpn_server_user_access }}/pki/issued/{{ ovpn_client_to_remove_name }}.crt
+      register: issclientcrt
+    - name: Call revoke option
+      expect:
+        command: sh /{{ vpn_server_user_access }}/easy-rsa/easyrsa revoke "{{ ovpn_client_to_remove_name }}"
+        responses:
+          'Continue with revocation': 'yes'
+      when: issclientcrt.stat.exists
+    - name: Check if pki/crl.pem exists
+      stat:
+        path: /{{ vpn_server_user_access }}/pki/crl.pem
+      register: crlpem
+    - name: Create pki/crl.pem
+      command: sh /{{ vpn_server_user_access }}/easy-rsa/easyrsa gen-crl
+      when: not crlpem.stat.exists
+    - name: Copy pki/crl.pem to /etc/openvpn
+      copy:
+        src: /{{ vpn_server_user_access }}/pki/crl.pem
+        dest: /etc/openvpn
+        remote_src: yes
+    - name: Add crl.pem line to /etc/openvpn/server.conf
+      lineinfile:
+        path: /etc/openvpn/server.conf
+        line: crl-verify crl.pem
+    - name: Restart ovpn server
+      systemd:
+        name: openvpn@server
+        state: restarted
+    - name: Delete ovpn client key
+      file:
+        path: /etc/openvpn/client/{{ ovpn_client_to_remove_name }}.key
+        state: absent      
+    - name: Delete ovpn client certs
+      file:
+        path: /etc/openvpn/client/{{ ovpn_client_to_remove_name }}.crt
+        state: absent
+    - name: Delete ovpn client folder
+      file:
+        path: /etc/openvpn/{{ ovpn_client_to_remove_name }}
+        state: absent
+    - name: Delete pki/issued client cert
+      file:
+        path: /{{ vpn_server_user_access }}/pki/issued/{{ ovpn_client_to_remove_name }}.crt
+        state: absent        
+    - name: Delete pki/private client cert
+      file:
+        path: /{{ vpn_server_user_access }}/pki/private/{{ ovpn_client_to_remove_name }}.key
+        state: absent

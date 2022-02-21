@@ -1,0 +1,33 @@
+ansible_python_interpreter: "/usr/bin/python3"
+vpn_server_user_access: ""
+vpn_server_name: ""
+vpn_server_ip: ""
+vpn_server_port: ""
+vpn_server_proto: ""
+vpn_server_dev: ""
+vpn_server_dev_peer: ""
+vpn_server_dev_out: ""
+vpn_server_network: ""
+vpn_server_network_different_mask: ""
+vpn_server_network_peer: ""
+vpn_server_dns_1: ""
+vpn_server_dns_2: ""
+vpn_server_keepalive: ""
+vpn_server_cipher: ""
+vpn_server_user: ""
+vpn_server_group: ""
+vpn_server_status_path: ""
+vpn_server_log_path: ""
+vpn_server_log_append_path: ""
+vpn_server_verb: ""
+vpn_server_exp_exit_not: ""
+ovpn_client_to_remove_name: ""
+ovpn_server_vars:
+  - { string_in_vars: '#set_var EASYRSA_REQ_COUNTRY', atribute_default: '"US"', new_string_in_vars: 'set_var EASYRSA_REQ_COUNTRY', atribute: '"<country_short>"'  }
+  - { string_in_vars: '#set_var EASYRSA_REQ_PROVINCE', atribute_default: '"California"', new_string_in_vars: 'set_var EASYRSA_REQ_PROVINCE', atribute: '"<region_short>"' }
+  - { string_in_vars: '#set_var EASYRSA_REQ_CITY', atribute_default: '"San Francisco"', new_string_in_vars: 'set_var EASYRSA_REQ_CITY', atribute: '"<City>"' }
+  - { string_in_vars: '#set_var EASYRSA_REQ_ORG', atribute_default: '"Copyleft Certificate Co"', new_string_in_vars: 'set_var EASYRSA_REQ_ORG', atribute: '"<Company>"' }
+  - { string_in_vars: '#set_var EASYRSA_REQ_EMAIL', atribute_default: '"me@example.net"', new_string_in_vars: 'set_var EASYRSA_REQ_EMAIL', atribute: '"<contact_mail>"' }
+  - { string_in_vars: '#set_var EASYRSA_REQ_OU', atribute_default: '"My Organizational Unit"', new_string_in_vars: 'set_var EASYRSA_REQ_OU', atribute: '"<department_short>"' }
+ovpn_clients_vars:
+  - { ovpn_client_name: '<vpn_client_name>', ovpn_client_pass: '<vpn_client_password_plain_text>', common_name: '<vpn_client_name_short>', vpn_client_res_ret: '<resolv_retry_type>', vpn_client_bind: '<bind_type>' }
